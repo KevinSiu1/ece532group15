@@ -39,6 +39,12 @@ module tb( );
             sys_clk = 1'b0;
             reset = 1'b1;
             enable = 1'b0;
-            #2 enable = 1'b1;
+            #52 enable = 1'b1;
+            #5000 reset = 1'b0;
+            #1 reset = 1'b1;
+            #2000 reset = 1'b0;
+            #1 reset = 1'b1;
+            #2000 enable = 1'b0;
+            #500 enable = 1'b1;
         end
 endmodule
