@@ -26,7 +26,7 @@ def Pyramid(img):
     return thumbnail
 
 
-def ColorDetect(thumbnail):
+def ColorDetect(thumbnail, color):
     height, width, channels = thumbnail.shape
     sum_h = 0
     sum_w = 0
@@ -37,8 +37,12 @@ def ColorDetect(thumbnail):
             blue = thumbnail[i, j, 0]
             green = thumbnail[i, j, 1]
             red = thumbnail[i, j, 2]
-            # color red
-            if (0 < blue < 80) and (0 < green < 80) and (150 < red < 256) :
+#            print("%s%s%s," % (format(red, '02x'), format(green, '02x'), format(blue, '02x')))
+
+            if ((color == 'red') and (red >= 180) and (green <= 80) and (blue <= 80)) \
+                    or ((color == 'green') and (red <= 80) and (green >= 180) and (blue <= 80)) \
+                    or ((color == 'blue') and (red <= 80) and (green <= 80) and (blue >= 180)) \
+                    or ((color == 'yellow') and (red >= 200) and (green >= 200) and (blue <= 80)):
                 sum_h += i
                 sum_w += j
                 counter += 1
@@ -54,32 +58,23 @@ def ColorDetect(thumbnail):
 
 
 def main():
-    img1 = cv2.imread('red_1.jpg', cv2.IMREAD_COLOR)
-    thumbnail1 = Pyramid(img1)
-    cv2.imwrite('thumbnail_1.jpg', thumbnail1)
-    row1, col1 = ColorDetect(thumbnail1)
-    print('thumbnail_1.jpg: row: ' + str(row1) + ' col: ' + str(col1))
-    thumbnail1[row1, col1] = (0, 0, 0)
-    cv2.imwrite('coordinates_1.jpg', thumbnail1)
+    img = cv2.imread('FourColors.jpg', cv2.IMREAD_COLOR)
 
-    img2 = cv2.imread('red_2.jpg', cv2.IMREAD_COLOR)
-    thumbnail2 = Pyramid(img2)
-    cv2.imwrite('thumbnail_2.jpg', thumbnail2)
-    row2, col2 = ColorDetect(thumbnail2)
-    print('thumbnail_2.jpg: row: ' + str(row2) + ' col: ' + str(col2))
-    thumbnail2[row2, col2] = (0, 0, 0)
-    cv2.imwrite('coordinates_2.jpg', thumbnail2)
-
-    img3 = cv2.imread('red_3.jpg', cv2.IMREAD_COLOR)
-    thumbnail3 = Pyramid(img3)
-    cv2.imwrite('thumbnail_3.jpg', thumbnail3)
-    row3, col3 = ColorDetect(thumbnail3)
-    print('thumbnail_3.jpg: row: ' + str(row3) + ' col: ' + str(col3))
-    thumbnail3[row3, col3] = (0, 0, 0)
-    cv2.imwrite('coordinates_3.jpg', thumbnail3)
+    row_r, col_r = ColorDetect(img, 'red')
+    row_g, col_g = ColorDetect(img, 'green')
+    row_b, col_b = ColorDetect(img, 'blue')
+    row_y, col_y = ColorDetect(img, 'yellow')
+    img[row_r, col_r] = (0, 0, 0)
+    img[row_g, col_g] = (0, 0, 0)
+    img[row_b, col_b] = (0, 0, 0)
+    img[row_y, col_y] = (0, 0, 0)
+    print('RED: row: ' + str(row_r) + ' col: ' + str(col_r))
+    print('GREEN: row: ' + str(row_g) + ' col: ' + str(col_g))
+    print('BLUE: row: ' + str(row_b) + ' col: ' + str(col_b))
+    print('YELLOW: row: ' + str(row_y) + ' col: ' + str(col_y))
+    cv2.imwrite('coordinates.jpg', img)
 
     return
-
 
 if __name__ == "__main__":
     main()
