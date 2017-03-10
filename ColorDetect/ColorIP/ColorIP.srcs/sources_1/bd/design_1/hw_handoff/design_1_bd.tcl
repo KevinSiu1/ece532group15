@@ -40,7 +40,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 
 # The design that will be created by this Tcl script contains the following 
 # module references:
-# ColorDetect, ColorDetect, ColorDetect, ColorDetect
+# ColorDetect, ColorDetect, ColorDetect, ColorDetect, Internal_EN
 
 # Please add the sources of those modules before sourcing this Tcl script.
 
@@ -162,6 +162,7 @@ proc create_root_design { parentCell } {
   # Create interface ports
 
   # Create ports
+  set ALL_DONE [ create_bd_port -dir O ALL_DONE ]
   set CLK [ create_bd_port -dir I -type clk CLK ]
   set COLOR_BLUE [ create_bd_port -dir I -from 1 -to 0 COLOR_BLUE ]
   set COLOR_GREEN [ create_bd_port -dir I -from 1 -to 0 COLOR_GREEN ]
@@ -172,6 +173,7 @@ proc create_root_design { parentCell } {
   set COORD_RED [ create_bd_port -dir O -from 31 -to 0 COORD_RED ]
   set COORD_YELLOW [ create_bd_port -dir O -from 31 -to 0 COORD_YELLOW ]
   set EN [ create_bd_port -dir I EN ]
+  set INTERVAL [ create_bd_port -dir I -from 15 -to 0 INTERVAL ]
   set READY_BLUE [ create_bd_port -dir O READY_BLUE ]
   set READY_GREEN [ create_bd_port -dir O READY_GREEN ]
   set READY_RED [ create_bd_port -dir O READY_RED ]
@@ -222,6 +224,17 @@ proc create_root_design { parentCell } {
      return 1
    }
   
+  # Create instance: Internal_EN_0, and set properties
+  set block_name Internal_EN
+  set block_cell_name Internal_EN_0
+  if { [catch {set Internal_EN_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_msg_id "BD_TCL-105" "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $Internal_EN_0 eq "" } {
+     catch {common::send_msg_id "BD_TCL-106" "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
   # Create instance: ROM, and set properties
   set ROM [ create_bd_cell -type ip -vlnv xilinx.com:ip:blk_mem_gen:8.3 ROM ]
   set_property -dict [ list \
@@ -244,7 +257,7 @@ CONFIG.use_bram_block {Stand_Alone} \
  ] $ROM
 
   # Create port connections
-  connect_bd_net -net CLK_1 [get_bd_ports CLK] [get_bd_pins ColorDetect_Blue/CLK] [get_bd_pins ColorDetect_Green/CLK] [get_bd_pins ColorDetect_Red/CLK] [get_bd_pins ColorDetect_Yellow/CLK] [get_bd_pins ROM/clka]
+  connect_bd_net -net CLK_1 [get_bd_ports CLK] [get_bd_pins ColorDetect_Blue/CLK] [get_bd_pins ColorDetect_Green/CLK] [get_bd_pins ColorDetect_Red/CLK] [get_bd_pins ColorDetect_Yellow/CLK] [get_bd_pins Internal_EN_0/CLK] [get_bd_pins ROM/clka]
   connect_bd_net -net COLOR_1 [get_bd_ports COLOR_RED] [get_bd_pins ColorDetect_Red/COLOR]
   connect_bd_net -net COLOR_1_1 [get_bd_ports COLOR_GREEN] [get_bd_pins ColorDetect_Green/COLOR]
   connect_bd_net -net COLOR_2_1 [get_bd_ports COLOR_BLUE] [get_bd_pins ColorDetect_Blue/COLOR]
@@ -258,8 +271,11 @@ CONFIG.use_bram_block {Stand_Alone} \
   connect_bd_net -net ColorDetect_Red_READY [get_bd_ports READY_RED] [get_bd_pins ColorDetect_Red/READY]
   connect_bd_net -net ColorDetect_Yellow_COORDINATE [get_bd_ports COORD_YELLOW] [get_bd_pins ColorDetect_Yellow/COORDINATE]
   connect_bd_net -net ColorDetect_Yellow_READY [get_bd_ports READY_YELLOW] [get_bd_pins ColorDetect_Yellow/READY]
-  connect_bd_net -net EN_1 [get_bd_ports EN] [get_bd_pins ColorDetect_Blue/EN] [get_bd_pins ColorDetect_Green/EN] [get_bd_pins ColorDetect_Red/EN] [get_bd_pins ColorDetect_Yellow/EN]
-  connect_bd_net -net RESET_1 [get_bd_ports RESET] [get_bd_pins ColorDetect_Blue/RESET] [get_bd_pins ColorDetect_Green/RESET] [get_bd_pins ColorDetect_Red/RESET] [get_bd_pins ColorDetect_Yellow/RESET]
+  connect_bd_net -net EN_1 [get_bd_ports EN] [get_bd_pins Internal_EN_0/EN_EXT]
+  connect_bd_net -net INTERVAL_1 [get_bd_ports INTERVAL] [get_bd_pins Internal_EN_0/INTERVAL]
+  connect_bd_net -net Internal_EN_0_ALL_DONE [get_bd_ports ALL_DONE] [get_bd_pins Internal_EN_0/ALL_DONE]
+  connect_bd_net -net Internal_EN_0_EN_INT [get_bd_pins ColorDetect_Blue/EN] [get_bd_pins ColorDetect_Green/EN] [get_bd_pins ColorDetect_Red/EN] [get_bd_pins ColorDetect_Yellow/EN] [get_bd_pins Internal_EN_0/EN_INT]
+  connect_bd_net -net RESET_1 [get_bd_ports RESET] [get_bd_pins ColorDetect_Blue/RESET] [get_bd_pins ColorDetect_Green/RESET] [get_bd_pins ColorDetect_Red/RESET] [get_bd_pins ColorDetect_Yellow/RESET] [get_bd_pins Internal_EN_0/RESET]
   connect_bd_net -net ROM_douta [get_bd_pins ColorDetect_Blue/DATA_IN] [get_bd_pins ColorDetect_Green/DATA_IN] [get_bd_pins ColorDetect_Red/DATA_IN] [get_bd_pins ColorDetect_Yellow/DATA_IN] [get_bd_pins ROM/douta]
 
   # Create address segments
@@ -268,44 +284,50 @@ CONFIG.use_bram_block {Stand_Alone} \
   regenerate_bd_layout -layout_string {
    guistr: "# # String gsaved with Nlview 6.5.12  2016-01-29 bk=1.3547 VDI=39 GEI=35 GUI=JA:1.6
 #  -string -flagsOSRD
-preplace port READY_YELLOW -pg 1 -y 700 -defaultsOSRD
-preplace port EN -pg 1 -y 220 -defaultsOSRD
-preplace port READY_RED -pg 1 -y 220 -defaultsOSRD
-preplace port CLK -pg 1 -y 200 -defaultsOSRD
-preplace port RESET -pg 1 -y 180 -defaultsOSRD
-preplace port READY_BLUE -pg 1 -y 540 -defaultsOSRD
-preplace port READY_GREEN -pg 1 -y 380 -defaultsOSRD
-preplace portBus COORD_YELLOW -pg 1 -y 680 -defaultsOSRD
-preplace portBus COLOR_RED -pg 1 -y 240 -defaultsOSRD
-preplace portBus COORD_GREEN -pg 1 -y 360 -defaultsOSRD
-preplace portBus COORD_BLUE -pg 1 -y 520 -defaultsOSRD
-preplace portBus COORD_RED -pg 1 -y 200 -defaultsOSRD
-preplace portBus COLOR_YELLOW -pg 1 -y 720 -defaultsOSRD
-preplace portBus COLOR_GREEN -pg 1 -y 400 -defaultsOSRD
-preplace portBus COLOR_BLUE -pg 1 -y 560 -defaultsOSRD
-preplace inst ColorDetect_Blue -pg 1 -lvl 1 -y 540 -defaultsOSRD
-preplace inst ColorDetect_Green -pg 1 -lvl 1 -y 380 -defaultsOSRD
-preplace inst ColorDetect_Yellow -pg 1 -lvl 1 -y 700 -defaultsOSRD
-preplace inst ColorDetect_Red -pg 1 -lvl 1 -y 220 -defaultsOSRD
-preplace inst ROM -pg 1 -lvl 1 -y 20 -defaultsOSRD
-preplace netloc CLK_1 1 0 1 NJ
-preplace netloc ColorDetect_Red_READY 1 1 1 NJ
-preplace netloc ColorDetect_Red_COORDINATE 1 1 1 NJ
-preplace netloc COLOR_2_1 1 0 1 NJ
-preplace netloc ColorDetect_Red_ADDR 1 0 2 80 -70 550
-preplace netloc COLOR_1 1 0 1 NJ
-preplace netloc ColorDetect_Yellow_COORDINATE 1 1 1 NJ
-preplace netloc ColorDetect_Yellow_READY 1 1 1 NJ
-preplace netloc COLOR_3_1 1 0 1 NJ
+preplace port READY_YELLOW -pg 1 -y 780 -defaultsOSRD
+preplace port EN -pg 1 -y 170 -defaultsOSRD
+preplace port READY_RED -pg 1 -y 280 -defaultsOSRD
+preplace port CLK -pg 1 -y 80 -defaultsOSRD
+preplace port RESET -pg 1 -y 150 -defaultsOSRD
+preplace port READY_BLUE -pg 1 -y 620 -defaultsOSRD
+preplace port READY_GREEN -pg 1 -y 460 -defaultsOSRD
+preplace port ALL_DONE -pg 1 -y 170 -defaultsOSRD
+preplace portBus COORD_YELLOW -pg 1 -y 760 -defaultsOSRD
+preplace portBus COLOR_RED -pg 1 -y 300 -defaultsOSRD
+preplace portBus INTERVAL -pg 1 -y 190 -defaultsOSRD
+preplace portBus COORD_GREEN -pg 1 -y 440 -defaultsOSRD
+preplace portBus COORD_BLUE -pg 1 -y 600 -defaultsOSRD
+preplace portBus COORD_RED -pg 1 -y 260 -defaultsOSRD
+preplace portBus COLOR_YELLOW -pg 1 -y 800 -defaultsOSRD
+preplace portBus COLOR_GREEN -pg 1 -y 480 -defaultsOSRD
+preplace portBus COLOR_BLUE -pg 1 -y 640 -defaultsOSRD
+preplace inst ColorDetect_Blue -pg 1 -lvl 2 -y 600 -defaultsOSRD
+preplace inst Internal_EN_0 -pg 1 -lvl 1 -y 160 -defaultsOSRD
+preplace inst ColorDetect_Green -pg 1 -lvl 2 -y 440 -defaultsOSRD
+preplace inst ColorDetect_Yellow -pg 1 -lvl 2 -y 760 -defaultsOSRD
+preplace inst ColorDetect_Red -pg 1 -lvl 2 -y 260 -defaultsOSRD
+preplace inst ROM -pg 1 -lvl 2 -y 80 -defaultsOSRD
+preplace netloc INTERVAL_1 1 0 1 N
+preplace netloc CLK_1 1 0 2 10 80 300
+preplace netloc ColorDetect_Red_READY 1 2 1 NJ
+preplace netloc ColorDetect_Red_COORDINATE 1 2 1 NJ
+preplace netloc COLOR_2_1 1 0 2 NJ 640 NJ
+preplace netloc ColorDetect_Red_ADDR 1 1 2 310 350 620
+preplace netloc COLOR_1 1 0 2 NJ 300 NJ
+preplace netloc Internal_EN_0_EN_INT 1 1 1 280
+preplace netloc Internal_EN_0_ALL_DONE 1 1 2 NJ 170 NJ
+preplace netloc ColorDetect_Yellow_COORDINATE 1 2 1 NJ
+preplace netloc ColorDetect_Yellow_READY 1 2 1 NJ
+preplace netloc COLOR_3_1 1 0 2 NJ 800 NJ
 preplace netloc EN_1 1 0 1 NJ
-preplace netloc RESET_1 1 0 1 NJ
-preplace netloc ColorDetect_Green_READY 1 1 1 NJ
-preplace netloc COLOR_1_1 1 0 1 NJ
-preplace netloc ColorDetect_Blue_COORDINATE 1 1 1 NJ
-preplace netloc ROM_douta 1 0 1 80
-preplace netloc ColorDetect_Blue_READY 1 1 1 NJ
-preplace netloc ColorDetect_Green_COORDINATE 1 1 1 NJ
-levelinfo -pg 1 0 400 590 -top -80 -bot 790
+preplace netloc RESET_1 1 0 2 20 60 290
+preplace netloc ColorDetect_Green_READY 1 2 1 NJ
+preplace netloc COLOR_1_1 1 0 2 NJ 480 NJ
+preplace netloc ColorDetect_Blue_COORDINATE 1 2 1 NJ
+preplace netloc ROM_douta 1 1 1 320
+preplace netloc ColorDetect_Blue_READY 1 2 1 NJ
+preplace netloc ColorDetect_Green_COORDINATE 1 2 1 NJ
+levelinfo -pg 1 -10 150 470 640 -top 0 -bot 850
 ",
 }
 

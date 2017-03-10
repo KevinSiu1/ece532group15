@@ -1,7 +1,7 @@
 //Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2016.2 (win64) Build 1577090 Thu Jun  2 16:32:40 MDT 2016
-//Date        : Thu Feb 23 21:37:36 2017
+//Date        : Fri Mar 10 01:31:07 2017
 //Host        : DESKTOP-U1ER32I running 64-bit major release  (build 9200)
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -9,9 +9,10 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=5,numReposBlks=5,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=4,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=6,numReposBlks=6,numNonXlnxBlks=0,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=5,numPkgbdBlks=0,bdsource=USER,synth_mode=Global}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
-   (CLK,
+   (ALL_DONE,
+    CLK,
     COLOR_BLUE,
     COLOR_GREEN,
     COLOR_RED,
@@ -21,11 +22,13 @@ module design_1
     COORD_RED,
     COORD_YELLOW,
     EN,
+    INTERVAL,
     READY_BLUE,
     READY_GREEN,
     READY_RED,
     READY_YELLOW,
     RESET);
+  output ALL_DONE;
   input CLK;
   input [1:0]COLOR_BLUE;
   input [1:0]COLOR_GREEN;
@@ -36,6 +39,7 @@ module design_1
   output [31:0]COORD_RED;
   output [31:0]COORD_YELLOW;
   input EN;
+  input [15:0]INTERVAL;
   output READY_BLUE;
   output READY_GREEN;
   output READY_RED;
@@ -57,9 +61,13 @@ module design_1
   wire [31:0]ColorDetect_Yellow_COORDINATE;
   wire ColorDetect_Yellow_READY;
   wire EN_1;
+  wire [15:0]INTERVAL_1;
+  wire Internal_EN_0_ALL_DONE;
+  wire Internal_EN_0_EN_INT;
   wire RESET_1;
   wire [23:0]ROM_douta;
 
+  assign ALL_DONE = Internal_EN_0_ALL_DONE;
   assign CLK_1 = CLK;
   assign COLOR_1 = COLOR_RED[1:0];
   assign COLOR_1_1 = COLOR_GREEN[1:0];
@@ -70,6 +78,7 @@ module design_1
   assign COORD_RED[31:0] = ColorDetect_Red_COORDINATE;
   assign COORD_YELLOW[31:0] = ColorDetect_Yellow_COORDINATE;
   assign EN_1 = EN;
+  assign INTERVAL_1 = INTERVAL[15:0];
   assign READY_BLUE = ColorDetect_Blue_READY;
   assign READY_GREEN = ColorDetect_Green_READY;
   assign READY_RED = ColorDetect_Red_READY;
@@ -80,7 +89,7 @@ module design_1
         .COLOR(COLOR_2_1),
         .COORDINATE(ColorDetect_Blue_COORDINATE),
         .DATA_IN(ROM_douta),
-        .EN(EN_1),
+        .EN(Internal_EN_0_EN_INT),
         .READY(ColorDetect_Blue_READY),
         .RESET(RESET_1));
   design_1_ColorDetect_Red_2 ColorDetect_Green
@@ -88,7 +97,7 @@ module design_1
         .COLOR(COLOR_1_1),
         .COORDINATE(ColorDetect_Green_COORDINATE),
         .DATA_IN(ROM_douta),
-        .EN(EN_1),
+        .EN(Internal_EN_0_EN_INT),
         .READY(ColorDetect_Green_READY),
         .RESET(RESET_1));
   design_1_ColorDetect_0_0 ColorDetect_Red
@@ -97,7 +106,7 @@ module design_1
         .COLOR(COLOR_1),
         .COORDINATE(ColorDetect_Red_COORDINATE),
         .DATA_IN(ROM_douta),
-        .EN(EN_1),
+        .EN(Internal_EN_0_EN_INT),
         .READY(ColorDetect_Red_READY),
         .RESET(RESET_1));
   design_1_ColorDetect_Red_0 ColorDetect_Yellow
@@ -105,8 +114,15 @@ module design_1
         .COLOR(COLOR_3_1),
         .COORDINATE(ColorDetect_Yellow_COORDINATE),
         .DATA_IN(ROM_douta),
-        .EN(EN_1),
+        .EN(Internal_EN_0_EN_INT),
         .READY(ColorDetect_Yellow_READY),
+        .RESET(RESET_1));
+  design_1_Internal_EN_0_0 Internal_EN_0
+       (.ALL_DONE(Internal_EN_0_ALL_DONE),
+        .CLK(CLK_1),
+        .EN_EXT(EN_1),
+        .EN_INT(Internal_EN_0_EN_INT),
+        .INTERVAL(INTERVAL_1),
         .RESET(RESET_1));
   design_1_blk_mem_gen_0_0 ROM
        (.addra(ColorDetect_Red_ADDR),

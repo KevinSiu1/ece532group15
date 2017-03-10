@@ -1,7 +1,7 @@
 //Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2016.2 (win64) Build 1577090 Thu Jun  2 16:32:40 MDT 2016
-//Date        : Thu Feb 23 21:37:36 2017
+//Date        : Fri Mar 10 01:31:07 2017
 //Host        : DESKTOP-U1ER32I running 64-bit major release  (build 9200)
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -10,7 +10,8 @@
 `timescale 1 ps / 1 ps
 
 module design_1_wrapper
-   (CLK,
+   (ALL_DONE,
+    CLK,
     COLOR_BLUE,
     COLOR_GREEN,
     COLOR_RED,
@@ -20,11 +21,13 @@ module design_1_wrapper
     COORD_RED,
     COORD_YELLOW,
     EN,
+    INTERVAL,
     READY_BLUE,
     READY_GREEN,
     READY_RED,
     READY_YELLOW,
     RESET);
+  output ALL_DONE;
   input CLK;
   input [1:0]COLOR_BLUE;
   input [1:0]COLOR_GREEN;
@@ -35,12 +38,14 @@ module design_1_wrapper
   output [31:0]COORD_RED;
   output [31:0]COORD_YELLOW;
   input EN;
+  input [15:0]INTERVAL;
   output READY_BLUE;
   output READY_GREEN;
   output READY_RED;
   output READY_YELLOW;
   input RESET;
 
+  wire ALL_DONE;
   wire CLK;
   wire [1:0]COLOR_BLUE;
   wire [1:0]COLOR_GREEN;
@@ -51,6 +56,7 @@ module design_1_wrapper
   wire [31:0]COORD_RED;
   wire [31:0]COORD_YELLOW;
   wire EN;
+  wire [15:0]INTERVAL;
   wire READY_BLUE;
   wire READY_GREEN;
   wire READY_RED;
@@ -58,7 +64,8 @@ module design_1_wrapper
   wire RESET;
 
   design_1 design_1_i
-       (.CLK(CLK),
+       (.ALL_DONE(ALL_DONE),
+        .CLK(CLK),
         .COLOR_BLUE(COLOR_BLUE),
         .COLOR_GREEN(COLOR_GREEN),
         .COLOR_RED(COLOR_RED),
@@ -68,6 +75,7 @@ module design_1_wrapper
         .COORD_RED(COORD_RED),
         .COORD_YELLOW(COORD_YELLOW),
         .EN(EN),
+        .INTERVAL(INTERVAL),
         .READY_BLUE(READY_BLUE),
         .READY_GREEN(READY_GREEN),
         .READY_RED(READY_RED),

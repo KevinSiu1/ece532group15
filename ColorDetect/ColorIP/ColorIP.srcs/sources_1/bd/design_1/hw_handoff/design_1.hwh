@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Feb 23 21:37:36 2017" VIVADOVERSION="2016.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Mar 10 01:31:07 2017" VIVADOVERSION="2016.2">
 
   <SYSTEMINFO ARCH="artix7" DEVICE="7a100t" NAME="design_1" PACKAGE="csg324" SPEEDGRADE="-1"/>
 
@@ -70,6 +70,7 @@
         <CONNECTION INSTANCE="ColorDetect_Yellow" PORT="RESET"/>
         <CONNECTION INSTANCE="ColorDetect_Blue" PORT="RESET"/>
         <CONNECTION INSTANCE="ColorDetect_Green" PORT="RESET"/>
+        <CONNECTION INSTANCE="Internal_EN_0" PORT="RESET"/>
       </CONNECTIONS>
     </PORT>
     <PORT CLKFREQUENCY="100000000" DIR="I" NAME="CLK" SIGIS="clk" SIGNAME="External_Ports_CLK">
@@ -79,14 +80,22 @@
         <CONNECTION INSTANCE="ColorDetect_Yellow" PORT="CLK"/>
         <CONNECTION INSTANCE="ColorDetect_Blue" PORT="CLK"/>
         <CONNECTION INSTANCE="ColorDetect_Green" PORT="CLK"/>
+        <CONNECTION INSTANCE="Internal_EN_0" PORT="CLK"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="External_Ports_EN">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="ColorDetect_Red" PORT="EN"/>
-        <CONNECTION INSTANCE="ColorDetect_Yellow" PORT="EN"/>
-        <CONNECTION INSTANCE="ColorDetect_Blue" PORT="EN"/>
-        <CONNECTION INSTANCE="ColorDetect_Green" PORT="EN"/>
+        <CONNECTION INSTANCE="Internal_EN_0" PORT="EN_EXT"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="ALL_DONE" SIGIS="undef" SIGNAME="Internal_EN_0_ALL_DONE">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Internal_EN_0" PORT="ALL_DONE"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="15" NAME="INTERVAL" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_INTERVAL">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Internal_EN_0" PORT="INTERVAL"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -111,9 +120,9 @@
             <CONNECTION INSTANCE="External_Ports" PORT="CLK"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="External_Ports_EN">
+        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="Internal_EN_0_EN_INT">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="EN"/>
+            <CONNECTION INSTANCE="Internal_EN_0" PORT="EN_INT"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="23" NAME="DATA_IN" RIGHT="0" SIGIS="undef" SIGNAME="ROM_douta">
@@ -157,9 +166,9 @@
             <CONNECTION INSTANCE="External_Ports" PORT="CLK"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="External_Ports_EN">
+        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="Internal_EN_0_EN_INT">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="EN"/>
+            <CONNECTION INSTANCE="Internal_EN_0" PORT="EN_INT"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="23" NAME="DATA_IN" RIGHT="0" SIGIS="undef" SIGNAME="ROM_douta">
@@ -203,9 +212,9 @@
             <CONNECTION INSTANCE="External_Ports" PORT="CLK"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="External_Ports_EN">
+        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="Internal_EN_0_EN_INT">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="EN"/>
+            <CONNECTION INSTANCE="Internal_EN_0" PORT="EN_INT"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="23" NAME="DATA_IN" RIGHT="0" SIGIS="undef" SIGNAME="ROM_douta">
@@ -253,9 +262,9 @@
             <CONNECTION INSTANCE="External_Ports" PORT="CLK"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="External_Ports_EN">
+        <PORT DIR="I" NAME="EN" SIGIS="undef" SIGNAME="Internal_EN_0_EN_INT">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="EN"/>
+            <CONNECTION INSTANCE="Internal_EN_0" PORT="EN_INT"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="23" NAME="DATA_IN" RIGHT="0" SIGIS="undef" SIGNAME="ROM_douta">
@@ -277,6 +286,49 @@
         <PORT DIR="O" NAME="READY" SIGIS="undef" SIGNAME="ColorDetect_Yellow_READY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="READY_YELLOW"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/Internal_EN_0" HWVERSION="1.0" INSTANCE="Internal_EN_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="Internal_EN" VLNV="xilinx.com:module_ref:Internal_EN:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_Internal_EN_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="CLK" SIGIS="clk" SIGNAME="External_Ports_CLK">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="CLK"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="RESET" SIGIS="rst" SIGNAME="External_Ports_RESET">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="RESET"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="EN_EXT" SIGIS="undef" SIGNAME="External_Ports_EN">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="EN"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="15" NAME="INTERVAL" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_INTERVAL">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="INTERVAL"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="EN_INT" SIGIS="undef" SIGNAME="Internal_EN_0_EN_INT">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="ColorDetect_Red" PORT="EN"/>
+            <CONNECTION INSTANCE="ColorDetect_Green" PORT="EN"/>
+            <CONNECTION INSTANCE="ColorDetect_Blue" PORT="EN"/>
+            <CONNECTION INSTANCE="ColorDetect_Yellow" PORT="EN"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="ALL_DONE" SIGIS="undef" SIGNAME="Internal_EN_0_ALL_DONE">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="ALL_DONE"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

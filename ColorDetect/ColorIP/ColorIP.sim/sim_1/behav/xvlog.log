@@ -14,6 +14,8 @@ INFO: [VRFC 10-2263] Analyzing SystemVerilog file "C:/Xilinx/Vivado/2016.2/data/
 INFO: [VRFC 10-311] analyzing module xpm_memory_tdpram
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/shang/Documents/ECE532/ece532group15/ColorDetect/ColorIP/ColorIP.srcs/sources_1/new/ColorDetect.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module ColorDetect
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/shang/Documents/ECE532/ece532group15/ColorDetect/ColorIP/ColorIP.srcs/sources_1/new/Internal_EN.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Internal_EN
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/shang/Documents/ECE532/ece532group15/ColorDetect/ColorIP/ColorIP.ip_user_files/ipstatic/blk_mem_gen_v8_3/simulation/blk_mem_gen_v8_3.v" into library blk_mem_gen_v8_3_3
 INFO: [VRFC 10-311] analyzing module STATE_LOGIC_v8_3
 INFO: [VRFC 10-311] analyzing module beh_vlog_muxf7_v8_3
@@ -41,6 +43,8 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/shang/Documents/ECE532/ece
 INFO: [VRFC 10-311] analyzing module design_1_ColorDetect_Red_2
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/shang/Documents/ECE532/ece532group15/ColorDetect/ColorIP/ColorIP.ip_user_files/bd/design_1/hdl/design_1.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module design_1
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/shang/Documents/ECE532/ece532group15/ColorDetect/ColorIP/ColorIP.ip_user_files/bd/design_1/ip/design_1_Internal_EN_0_0/sim/design_1_Internal_EN_0_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module design_1_Internal_EN_0_0
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/shang/Documents/ECE532/ece532group15/ColorDetect/ColorIP/ColorIP.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module design_1_wrapper
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/shang/Documents/ECE532/ece532group15/ColorDetect/ColorIP/ColorIP.srcs/sim_1/new/tb.v" into library xil_defaultlib

@@ -13,6 +13,7 @@ module tb( );
     wire ready_g;
     wire ready_b;
     wire ready_y;
+    wire all_done;
     
     design_1_wrapper dut
     (.RESET(reset),
@@ -29,8 +30,12 @@ module tb( );
      .READY_RED(ready_r),
      .READY_GREEN(ready_g),
      .READY_BLUE(ready_b),
-     .READY_YELLOW(ready_y)
+     .READY_YELLOW(ready_y),
+     .ALL_DONE(all_done),
+     .INTERVAL(16'b0100111000100000)    // 15,000
      );
+
+
      
      always #5 sys_clk = ~sys_clk;
          
@@ -39,12 +44,13 @@ module tb( );
             sys_clk = 1'b0;
             reset = 1'b1;
             enable = 1'b0;
-            #52 enable = 1'b1;
-            #5000 reset = 1'b0;
-            #1 reset = 1'b1;
-            #2000 reset = 1'b0;
-            #1 reset = 1'b1;
-            #2000 enable = 1'b0;
-            #500 enable = 1'b1;
+            #8 enable = 1'b1;
+            #2500000 enable = 1'b0;
+//            #5000 reset = 1'b0;
+//            #1 reset = 1'b1;
+//            #2000 reset = 1'b0;
+//            #1 reset = 1'b1;
+//            #2000 enable = 1'b0;
+//            #500 enable = 1'b1;
         end
 endmodule

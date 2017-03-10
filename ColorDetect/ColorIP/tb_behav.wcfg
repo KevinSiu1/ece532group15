@@ -12,190 +12,79 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="4000000001fs"></ZoomEndTime>
-      <Cursor1Time time="3884372000fs"></Cursor1Time>
+      <ZoomEndTime time="1107000000001fs"></ZoomEndTime>
+      <Cursor1Time time="363954000fs"></Cursor1Time>
    </zoom_setting>
-   <WVObjectSize size="27" />
-   <wvobject fp_name="/tb/reset" type="logic">
-      <obj_property name="ElementShortName">reset</obj_property>
-      <obj_property name="ObjectShortName">reset</obj_property>
-      <obj_property name="CustomSignalColor">#A0A0A4</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <WVObjectSize size="16" />
+   <wvobject fp_name="/tb/dut/CLK" type="logic">
+      <obj_property name="ElementShortName">CLK</obj_property>
+      <obj_property name="ObjectShortName">CLK</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/enable" type="logic">
-      <obj_property name="ElementShortName">enable</obj_property>
-      <obj_property name="ObjectShortName">enable</obj_property>
-      <obj_property name="CustomSignalColor">#A0A0A4</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/tb/dut/RESET" type="logic">
+      <obj_property name="ElementShortName">RESET</obj_property>
+      <obj_property name="ObjectShortName">RESET</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/sys_clk" type="logic">
-      <obj_property name="ElementShortName">sys_clk</obj_property>
-      <obj_property name="ObjectShortName">sys_clk</obj_property>
-      <obj_property name="CustomSignalColor">#A0A0A4</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/tb/dut/EN" type="logic">
+      <obj_property name="ElementShortName">EN</obj_property>
+      <obj_property name="ObjectShortName">EN</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Red/inst/x" type="array">
-      <obj_property name="ElementShortName">x[31:0]</obj_property>
-      <obj_property name="ObjectShortName">x[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#A0A0A4</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   <wvobject fp_name="/tb/dut/INTERVEL" type="array">
+      <obj_property name="ElementShortName">INTERVEL[15:0]</obj_property>
+      <obj_property name="ObjectShortName">INTERVEL[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Red/inst/y" type="array">
-      <obj_property name="ElementShortName">y[31:0]</obj_property>
-      <obj_property name="ObjectShortName">y[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#A0A0A4</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   <wvobject fp_name="/tb/dut/design_1_i/Internal_EN_0/inst/en_int" type="logic">
+      <obj_property name="ElementShortName">en_int</obj_property>
+      <obj_property name="ObjectShortName">en_int</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Red/inst/ADDR" type="array">
-      <obj_property name="ElementShortName">ADDR[13:0]</obj_property>
-      <obj_property name="ObjectShortName">ADDR[13:0]</obj_property>
-      <obj_property name="CustomSignalColor">#A0A0A4</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/tb/dut/design_1_i/Internal_EN_0/inst/frames" type="array">
+      <obj_property name="ElementShortName">frames[31:0]</obj_property>
+      <obj_property name="ObjectShortName">frames[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/design_1_i/Internal_EN_0/inst/cycles" type="array">
+      <obj_property name="ElementShortName">cycles[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cycles[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/ALL_DONE" type="logic">
+      <obj_property name="ElementShortName">ALL_DONE</obj_property>
+      <obj_property name="ObjectShortName">ALL_DONE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/COORD_RED" type="array">
+      <obj_property name="ElementShortName">COORD_RED[31:0]</obj_property>
+      <obj_property name="ObjectShortName">COORD_RED[31:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Red/inst/DATA_IN" type="array">
-      <obj_property name="ElementShortName">DATA_IN[23:0]</obj_property>
-      <obj_property name="ObjectShortName">DATA_IN[23:0]</obj_property>
-      <obj_property name="CustomSignalColor">#A0A0A4</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/tb/dut/READY_RED" type="logic">
+      <obj_property name="ElementShortName">READY_RED</obj_property>
+      <obj_property name="ObjectShortName">READY_RED</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb/dut/COORD_GREEN" type="array">
+      <obj_property name="ElementShortName">COORD_GREEN[31:0]</obj_property>
+      <obj_property name="ObjectShortName">COORD_GREEN[31:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Red/inst/x_sum" type="array">
-      <obj_property name="ElementShortName">x_sum[31:0]</obj_property>
-      <obj_property name="ObjectShortName">x_sum[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FF0000</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   <wvobject fp_name="/tb/dut/READY_GREEN" type="logic">
+      <obj_property name="ElementShortName">READY_GREEN</obj_property>
+      <obj_property name="ObjectShortName">READY_GREEN</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Red/inst/y_sum" type="array">
-      <obj_property name="ElementShortName">y_sum[31:0]</obj_property>
-      <obj_property name="ObjectShortName">y_sum[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FF0000</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Red/inst/counter" type="array">
-      <obj_property name="ElementShortName">counter[31:0]</obj_property>
-      <obj_property name="ObjectShortName">counter[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FF0000</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/coord_r" type="array">
-      <obj_property name="ElementShortName">coord_r[31:0]</obj_property>
-      <obj_property name="ObjectShortName">coord_r[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FF0000</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/tb/dut/COORD_BLUE" type="array">
+      <obj_property name="ElementShortName">COORD_BLUE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">COORD_BLUE[31:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/ready_r" type="logic">
-      <obj_property name="ElementShortName">ready_r</obj_property>
-      <obj_property name="ObjectShortName">ready_r</obj_property>
-      <obj_property name="CustomSignalColor">#FF0000</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/tb/dut/READY_BLUE" type="logic">
+      <obj_property name="ElementShortName">READY_BLUE</obj_property>
+      <obj_property name="ObjectShortName">READY_BLUE</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Green/inst/x_sum" type="array">
-      <obj_property name="ElementShortName">x_sum[31:0]</obj_property>
-      <obj_property name="ObjectShortName">x_sum[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#00FF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Green/inst/y_sum" type="array">
-      <obj_property name="ElementShortName">y_sum[31:0]</obj_property>
-      <obj_property name="ObjectShortName">y_sum[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#00FF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Green/inst/counter" type="array">
-      <obj_property name="ElementShortName">counter[31:0]</obj_property>
-      <obj_property name="ObjectShortName">counter[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#00FF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/coord_g" type="array">
-      <obj_property name="ElementShortName">coord_g[31:0]</obj_property>
-      <obj_property name="ObjectShortName">coord_g[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#00FF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/tb/dut/COORD_YELLOW" type="array">
+      <obj_property name="ElementShortName">COORD_YELLOW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">COORD_YELLOW[31:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb/ready_g" type="logic">
-      <obj_property name="ElementShortName">ready_g</obj_property>
-      <obj_property name="ObjectShortName">ready_g</obj_property>
-      <obj_property name="CustomSignalColor">#00FF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Blue/inst/x_sum" type="array">
-      <obj_property name="ElementShortName">x_sum[31:0]</obj_property>
-      <obj_property name="ObjectShortName">x_sum[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Blue/inst/y_sum" type="array">
-      <obj_property name="ElementShortName">y_sum[31:0]</obj_property>
-      <obj_property name="ObjectShortName">y_sum[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Blue/inst/counter" type="array">
-      <obj_property name="ElementShortName">counter[31:0]</obj_property>
-      <obj_property name="ObjectShortName">counter[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/coord_b" type="array">
-      <obj_property name="ElementShortName">coord_b[31:0]</obj_property>
-      <obj_property name="ObjectShortName">coord_b[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/ready_b" type="logic">
-      <obj_property name="ElementShortName">ready_b</obj_property>
-      <obj_property name="ObjectShortName">ready_b</obj_property>
-      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Yellow/inst/x_sum" type="array">
-      <obj_property name="ElementShortName">x_sum[31:0]</obj_property>
-      <obj_property name="ObjectShortName">x_sum[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Yellow/inst/y_sum" type="array">
-      <obj_property name="ElementShortName">y_sum[31:0]</obj_property>
-      <obj_property name="ObjectShortName">y_sum[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/dut/design_1_i/ColorDetect_Yellow/inst/counter" type="array">
-      <obj_property name="ElementShortName">counter[31:0]</obj_property>
-      <obj_property name="ObjectShortName">counter[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/coord_y" type="array">
-      <obj_property name="ElementShortName">coord_y[31:0]</obj_property>
-      <obj_property name="ObjectShortName">coord_y[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb/ready_y" type="logic">
-      <obj_property name="ElementShortName">ready_y</obj_property>
-      <obj_property name="ObjectShortName">ready_y</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/tb/dut/READY_YELLOW" type="logic">
+      <obj_property name="ElementShortName">READY_YELLOW</obj_property>
+      <obj_property name="ObjectShortName">READY_YELLOW</obj_property>
    </wvobject>
 </wave_config>

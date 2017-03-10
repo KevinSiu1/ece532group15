@@ -230,6 +230,22 @@
             <spirit:direction>in</spirit:direction>
           </spirit:wire>
         </spirit:port>
+        <spirit:port>
+          <spirit:name>ALL_DONE</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>INTERVAL</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+            <spirit:vector>
+              <spirit:left>15</spirit:left>
+              <spirit:right>0</spirit:right>
+            </spirit:vector>
+          </spirit:wire>
+        </spirit:port>
       </spirit:ports>
     </spirit:model>
   </spirit:component>
@@ -294,6 +310,16 @@
         <spirit:configurableElementValues>
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_ColorDetect_Red_2</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:referenceName">ColorDetect</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>Internal_EN_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="module_ref" spirit:name="Internal_EN" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_Internal_EN_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="bd:referenceName">Internal_EN</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:subInstancePath"></spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="bd:referenceType">hdl</spirit:configurableElementValue>
         </spirit:configurableElementValues>
@@ -372,6 +398,7 @@
         <spirit:internalPortReference spirit:componentRef="ColorDetect_Yellow" spirit:portRef="RESET"/>
         <spirit:internalPortReference spirit:componentRef="ColorDetect_Blue" spirit:portRef="RESET"/>
         <spirit:internalPortReference spirit:componentRef="ColorDetect_Green" spirit:portRef="RESET"/>
+        <spirit:internalPortReference spirit:componentRef="Internal_EN_0" spirit:portRef="RESET"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>CLK_1</spirit:name>
@@ -381,14 +408,7 @@
         <spirit:internalPortReference spirit:componentRef="ColorDetect_Yellow" spirit:portRef="CLK"/>
         <spirit:internalPortReference spirit:componentRef="ColorDetect_Blue" spirit:portRef="CLK"/>
         <spirit:internalPortReference spirit:componentRef="ColorDetect_Green" spirit:portRef="CLK"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>EN_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="EN"/>
-        <spirit:internalPortReference spirit:componentRef="ColorDetect_Red" spirit:portRef="EN"/>
-        <spirit:internalPortReference spirit:componentRef="ColorDetect_Yellow" spirit:portRef="EN"/>
-        <spirit:internalPortReference spirit:componentRef="ColorDetect_Blue" spirit:portRef="EN"/>
-        <spirit:internalPortReference spirit:componentRef="ColorDetect_Green" spirit:portRef="EN"/>
+        <spirit:internalPortReference spirit:componentRef="Internal_EN_0" spirit:portRef="CLK"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>ROM_douta</spirit:name>
@@ -397,6 +417,29 @@
         <spirit:internalPortReference spirit:componentRef="ColorDetect_Yellow" spirit:portRef="DATA_IN"/>
         <spirit:internalPortReference spirit:componentRef="ColorDetect_Blue" spirit:portRef="DATA_IN"/>
         <spirit:internalPortReference spirit:componentRef="ColorDetect_Green" spirit:portRef="DATA_IN"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>EN_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="EN"/>
+        <spirit:internalPortReference spirit:componentRef="Internal_EN_0" spirit:portRef="EN_EXT"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>Internal_EN_0_ALL_DONE</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="Internal_EN_0" spirit:portRef="ALL_DONE"/>
+        <spirit:externalPortReference spirit:portRef="ALL_DONE"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>Internal_EN_0_EN_INT</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="Internal_EN_0" spirit:portRef="EN_INT"/>
+        <spirit:internalPortReference spirit:componentRef="ColorDetect_Red" spirit:portRef="EN"/>
+        <spirit:internalPortReference spirit:componentRef="ColorDetect_Green" spirit:portRef="EN"/>
+        <spirit:internalPortReference spirit:componentRef="ColorDetect_Blue" spirit:portRef="EN"/>
+        <spirit:internalPortReference spirit:componentRef="ColorDetect_Yellow" spirit:portRef="EN"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>INTERVAL_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="INTERVAL"/>
+        <spirit:internalPortReference spirit:componentRef="Internal_EN_0" spirit:portRef="INTERVAL"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
   </spirit:design>
