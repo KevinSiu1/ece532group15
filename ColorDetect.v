@@ -10,6 +10,7 @@ module ColorDetect(
     input [10:0] X_VALUE,
     input [9:0] Y_VALUE,
     input [1:0] COLOR,
+	input [31:0] FRAME_WAIT,
     
     output [31:0] COORDINATE,
     output READY
@@ -17,23 +18,28 @@ module ColorDetect(
     
     reg ready;
     reg frame_count;
-    integer x, y;
+    wire EN;
     integer x_sum, y_sum, counter;
     
-    wire data_valid;
-    
+    Internal_EN dut (
+        .CLK(clk),
+        .RESET(reset_n),
+        .EN_IN(enable),
+        .NEW_FRAME(DATA_IN_VALID && (X_VALUE == 11'b0) && (Y_VALUE == 10'b0)),
+        .FRAME_WAIT(FRAME_WAIT),
+        .EN_OUT(EN)
+    );
+        
     always @(posedge clk)
     begin
-        if (!reset_n || !enable)
+        if (!reset_n || !EN)
         begin
-            x <= 0;
-            y <= 0;
             x_sum <= 0;
             y_sum <= 0;
             counter <= 0;
             ready <= 1'b0;
-        end
-        else if (enable && data_valid)
+        end        
+        else if (EN && DATA_IN_VALID)
         begin
             // read pixel
             case (COLOR)
@@ -42,8 +48,8 @@ module ColorDetect(
                     && DATA_IN[15:8] <= 80      // G
                     && DATA_IN[7:0] <= 80 )    // B
                 begin     
-                    x_sum <= x_sum + x - 1;
-                    y_sum <= y_sum + y;
+                    x_sum <= x_sum + X_VALUE;
+                    y_sum <= y_sum + Y_VALUE;
                     counter <= counter + 1;
                 end
             2'b01 :     // green
@@ -51,8 +57,8 @@ module ColorDetect(
                     && DATA_IN[15:8] > 180     // G
                     && DATA_IN[7:0] < 80 )    // B
                 begin     
-                    x_sum <= x_sum + x - 1;
-                    y_sum <= y_sum + y;
+                    x_sum <= x_sum + X_VALUE;
+                    y_sum <= y_sum + Y_VALUE;
                     counter <= counter + 1;
                 end
             2'b10 :     // blue
@@ -60,8 +66,8 @@ module ColorDetect(
                     && DATA_IN[15:8] < 80      // G
                     && DATA_IN[7:0] > 180 )   // B
                 begin     
-                    x_sum <= x_sum + x - 1;
-                    y_sum <= y_sum + y;
+                    x_sum <= x_sum + X_VALUE;
+                    y_sum <= y_sum + Y_VALUE;
                     counter <= counter + 1;
                 end
             2'b11 :     // yellow
@@ -69,8 +75,8 @@ module ColorDetect(
                     && DATA_IN[15:8] > 200     // G
                     && DATA_IN[7:0] < 80 )    // B
                 begin     
-                    x_sum <= x_sum + x - 1;
-                    y_sum <= y_sum + y;
+                    x_sum <= x_sum + X_VALUE;
+                    y_sum <= y_sum + Y_VALUE;
                     counter <= counter + 1;
                 end                 
             endcase
@@ -80,24 +86,58 @@ module ColorDetect(
         // to get new pixel
         
         //FIXME: Where do we reset ready?
-        if( x == 1276 && y == 716 ) begin  // max, reset everything
+        if( X_VALUE == 1279 && Y_VALUE == 719 ) begin  // max, reset everything
             ready <= 1'b1;            
         end 
-        else if (enable && data_valid)
-        begin                
-            if ( x == 1276 ) begin
-                x <= 0;
-                y <= y + 4;  // Sample every 4th line (Is this necessary, or can we sample every line?)
-            end else
-                x <= x + 4;  // Sample every 4th pixel in a line
-        end  
+		
+		// RESET ready, ready is high only for one clock cycle
+		if (ready) begin	
+			ready <= 1'b0;
+		end
     end  
     
-    assign data_valid = DATA_IN_VALID && (X_VALUE[1:0] == 2'b00) && (Y_VALUE[1:0] == 2'b00);
-    
     //Is it possible to do this only once per frame?
-    assign COORDINATE[31:16] = x_sum / counter; // need rounding here 
-    assign COORDINATE[15:0] = y_sum / counter;  // need rounding here
+    assign COORDINATE[31:16] = x_sum / counter;  
+    assign COORDINATE[15:0] = y_sum / counter;  
     assign READY = ready;
     
 endmodule
+
+module Internal_EN(
+    input CLK,
+    input RESET,
+    input EN_IN,
+    input NEW_FRAME,
+    input [31:0] FRAME_WAIT,
+    output EN_OUT
+    );
+    
+    reg en_out;
+    integer frames;   
+    
+    always @ (posedge CLK) begin
+        if (!EN_IN || !RESET) begin
+            en_out <= 1'b0;
+            frames <= 0;
+        end
+        else if (EN_IN) begin
+            if (frames == FRAME_WAIT) begin
+                frames <= 0;
+                en_out <= 1'b1;
+            end
+            else if (NEW_FRAME) begin
+                frames <= frames + 1;
+                en_out <= 1'b0;
+            end
+            else begin
+                en_out <= 1'b0;
+            end
+        end
+        else begin
+            en_out <= 1'b0;
+        end
+    end
+    
+    assign EN_OUT = en_out;    
+endmodule
+
