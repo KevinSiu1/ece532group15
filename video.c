@@ -779,9 +779,9 @@ int * getNewMove(int * prev){
 	int j = 0;
 	int * result = malloc(sizeof(int) * 4);
 	for (; i < 4; i++) {
-		while (j == prev[i]) {
+		do {
 			j = rand();
-		}
+		} while (j == prev[i]) ;
 		result[i] = j;
 	}
 	return result;
